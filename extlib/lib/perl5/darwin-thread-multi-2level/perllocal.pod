@@ -1,0 +1,22 @@
+=head2 Fri Feb 11 01:47:21 2011: C<Module> L<Amon2|Amon2>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/iwanagaryosuke/perl/Rworker/extlib/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.14>
+
+=item *
+
+C<EXE_FILES: script/amon2-setup.pl>
+
+=back
+
