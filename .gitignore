@@ -4,3 +4,8 @@ MANIFEST
 *.bak
 *.old
 nytprof.out
+service/
+sandbox/
+R/data/
+R/img/
+R/r_return/
