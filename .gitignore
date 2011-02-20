@@ -3,6 +3,7 @@ inc/
 MANIFEST
 *.bak
 *.old
+*.swp
 nytprof.out
 service/
 sandbox/
