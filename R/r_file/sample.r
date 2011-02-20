@@ -1,12 +1,16 @@
 source('Rworker.r')
 
-args <- rworker_args()
+file <- rworker_download(args$data)
+rworker_log(paste("Download finished:", file))
 
-d <- read.csv(args$data_file, header = T)
-rworker_return("some messages")
-png(args$img_file)
+d <- read.csv(file, header = T)
+rworker_log("read.csv finished:")
+
+png(args$img)
 plot(d)
 null <- dev.off()
+rworker_log(paste("plot finished:", args$img))
 
-rworker_end()
-    
+status <- rworker_upload(args$upload_uri, args$upload_key, args$img)
+rworker_log(paste("upload finished:", status, args$upload_uri, args$upload_key, args$img))
+

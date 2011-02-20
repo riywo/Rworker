@@ -11,20 +11,19 @@ use Getopt::Long;
 
 my $root_dir = "$FindBin::Bin/..";
 my $config_file = $root_dir . '/config/rworker.pl';
-my $R_dir = $root_dir . '/R';
-my $restarter = 0;
+#my $restarter = 0;
 
 GetOptions(
     'c|config=s' => \$config_file,
-    'd|dir=s' => \$R_dir,
+    'd|dir=s' => \$root_dir,
 );
 
 die 'config not found' unless $config_file;
-die 'R dir not found' unless $R_dir;
+die 'root dir not found' unless $root_dir;
 
 my $rworker = Rworker::Worker->new({
     config_file => $config_file,
-    R_dir => $R_dir,
+    root_dir => $root_dir,
 });
 $rworker->run;
 
