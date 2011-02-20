@@ -8,11 +8,11 @@ use JSON;
 
 my $dir = "$FindBin::RealBin/../../R";
 my $arg1 = encode_json({
-    r_file    => "$dir/r_file/sample.r",
-    r_return  => "$dir/r_return/sample.log",
+    r_file    => "$dir/r_file/sample_local.r",
+    r_return  => "$dir/r_return/sample_local.log",
 
     data => "$dir/data/cars.csv",
-    img  => "$dir/img/sample.png",
+    img  => "$dir/img/sample_local.png",
 });
 my $arg2 = encode_json({
     r_file    => "https://gist.github.com/raw/829619/3cf65e97afe00c7fc0a1ebb1a9fb48c7c9ae3653/sample.r",
