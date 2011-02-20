@@ -155,7 +155,7 @@ sub rworker_download {
     push @{$self->{'unlink'}}, $file;
     my $res = $furl->request(
         method => 'GET',
-        url => $args->{'uri'},
+        url => $args->{'url'},
         write_file => $fh,
     );
     close $fh;
@@ -168,7 +168,7 @@ sub rworker_upload {
     my $args = decode_json($data);
 
     my $req = POST(
-        $args->{'uri'},
+        $args->{'url'},
         Content_Type => 'form-data',
         Content => {
             $args->{'key'} => [$args->{'file'}],

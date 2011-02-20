@@ -11,6 +11,6 @@ plot(d)
 null <- dev.off()
 rworker_log(paste("plot finished:", args$img))
 
-status <- rworker_upload(args$upload_uri, args$upload_key, args$img)
-rworker_log(paste("upload finished:", status, args$upload_uri, args$upload_key, args$img))
+status <- rworker_upload(args$upload_url, args$upload_key, args$img)
+rworker_log(paste("upload finished:", status, args$upload_url, args$upload_key, args$img))
 

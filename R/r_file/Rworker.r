@@ -10,9 +10,9 @@ rworker_log <- function(data) {
     cat(paste("Rworker::Log ", data, "\n", sep = ''))
 }
 
-rworker_upload <- function(uri, key, file) {
+rworker_upload <- function(url, key, file) {
     data <- list()
-    data$uri <- uri
+    data$url <- url
     data$key <- key
     data$file <- file
 
@@ -22,9 +22,9 @@ rworker_upload <- function(uri, key, file) {
     result$status
 }
 
-rworker_download <- function(uri) {
+rworker_download <- function(url) {
     data <- list()
-    data$uri <- uri
+    data$url <- url
 
     rworker_return("Download", data)
 
