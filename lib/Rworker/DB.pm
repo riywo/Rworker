@@ -1,3 +1,3 @@
 package Rworker::DB;
-use DBIx::Skinny;
+use parent 'Teng';
 1;
