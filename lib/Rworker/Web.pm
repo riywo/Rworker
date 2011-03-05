@@ -39,6 +39,7 @@ use Tiffany::Text::Xslate;
 # load plugins
 # __PACKAGE__->load_plugins('Web::FillInFormLite');
 # __PACKAGE__->load_plugins('Web::NoCache');
+__PACKAGE__->load_plugins('Web::JSON');
 
 # for your security
 __PACKAGE__->add_trigger(

@@ -11,6 +11,8 @@ use File::Temp qw(tempfile);
 use Furl;
 use HTTP::Request::Common;
 use POSIX;
+use Encode;
+use HTTP::Date;
 
 use Data::Dumper;
 
@@ -83,18 +85,7 @@ sub worker_job {
     $args->{'fifo'} = $fifo;
     my $json = encode_json($args);
 
-    if ($r_file =~ /^(http|https):\/\//) {
-        my ($fh, $file) = tempfile("$self->{'pid'}_XXXX", SUFFIX => '.r', DIR => $self->{'config'}->{'temp_dir'});
-        $self->{'temp_file'} = $file;
-        my $furl = Furl->new();
-        my $res = $furl->request(
-            method => 'GET',
-            url => $r_file,
-            write_file => $fh,
-        );
-        close $fh;
-        $r_file = $file;
-    }
+    $r_file = $self->_download_rfile($r_file) if ($r_file =~ /^(http|https):\/\//);
 
     my $CMD = "$config->{'R'} -f $r_file --args '$json'";
     print "start  $CMD\n";
@@ -102,8 +93,9 @@ sub worker_job {
     my $oldfh = select IN; $| = 1; select $oldfh;
 
     if ($r_return !~ /^(http|https):\/\//) {
-        open OUT, ">$r_return";
-        $oldfh = select OUT; $| = 1; select $oldfh;
+        open my $fh, '>', "$r_return" or die $!;
+        $oldfh = select $fh; $| = 1; select $oldfh;
+        $self->{'local_r_return'} = $fh;
     }
     while (my $line = <IN>) {
         chomp $line;
@@ -111,16 +103,11 @@ sub worker_job {
             my ($method, $data) = ($1, $2);
             $self->rworker_func($method, $data);
         }
-
-        if ($r_return =~ /^(http|https):\/\//) {
-            my $escaped = uri_escape($line);
-            my $furl = Furl->new();
-            my $res = $furl->get("$r_return$escaped");
-        }else{
-            print OUT "$line\n";
-        }
+        $self->_print_return($r_return, $line);
     }
-    close OUT if($r_return !~ /^(http|https):\/\//);
+    $self->_print_return($r_return, "Rworker::Finish");
+
+    close $self->{'local_r_return'} if($r_return !~ /^(http|https):\/\//);
     close IN;
 
     unlink $fifo;
@@ -137,6 +124,37 @@ sub worker_job {
     print "finish $CMD\n";
 }
 
+sub _download_rfile {
+    my ($self, $r_file) = @_;
+
+    my ($fh, $file) = tempfile("$self->{'pid'}_XXXX", SUFFIX => '.r', DIR => $self->{'config'}->{'temp_dir'});
+    $self->{'temp_file'} = $file;
+    my $furl = Furl->new();
+    my $res = $furl->request(
+        method => 'GET',
+        url => $r_file,
+        write_file => $fh,
+    );
+    close $fh;
+
+    return $file;
+}
+
+sub _print_return {
+    my ($self, $r_return, $line) = @_;
+
+    my $log = HTTP::Date::time2iso(time) . " $line";
+    if ($r_return =~ /^(http|https):\/\//) {
+        my $escaped = uri_escape_utf8(decode('utf-8', $log));
+        my $furl = Furl->new();
+        my $res = $furl->get("$r_return$escaped");
+    }else{
+        my $fh = $self->{'local_r_return'};
+        print $fh "$log\n";
+    }
+}
+
+
 sub rworker_func {
     my ($self, $method, $data) = @_;
     if ($method eq 'Download') {
@@ -150,7 +168,7 @@ sub rworker_download {
     my ($self, $data) = @_;
     my $args = decode_json($data);
 
-    my $furl = Furl->new();
+    my $furl = Furl->new(timeout => 300);
     my ($fh, $file) = tempfile("$self->{'pid'}_download_XXXXXXXX", DIR => $self->{'config'}->{'temp_dir'});
     push @{$self->{'unlink'}}, $file;
     my $res = $furl->request(
@@ -160,7 +178,7 @@ sub rworker_download {
     );
     close $fh;
 
-    $self->write_message({file => $file});
+    $self->write_message({file => $res->is_success ? $file : ''});
 }
 
 sub rworker_upload {
@@ -172,6 +190,7 @@ sub rworker_upload {
         Content_Type => 'form-data',
         Content => {
             $args->{'key'} => [$args->{'file'}],
+            comment => "aaaaaaaaaaaaaaaa",
         },
     );
     my $furl = Furl->new;

@@ -18,7 +18,7 @@ body {
 }
 
 #Container {
-    width: 780px;
+    width: 1200px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0px;
@@ -55,7 +55,7 @@ body {
     position:absolute;
     bottom:0px;
     height:20px;
-    width:780px;
+    width:1200px;
 }
 #Footer {
     text-align: right;

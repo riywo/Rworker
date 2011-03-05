@@ -7,10 +7,23 @@
     <meta http-equiv="Content-Script-Type" content="text/javascript" />  
     
     <link href="[% uri_for('/static/css/main.css') %]" rel="stylesheet" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="/static/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <link type="text/css" href="/static/css/ui-lightness/jquery-ui-1.8.9.custom.css" rel="stylesheet" />    
+    <script type="text/javascript" src="/static/js/jquery.upload-1.0.2.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.loading.1.6.4.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.jgrowl.js"></script>
+    <link type="text/css" href="/static/css/jquery.jgrowl.css" rel="stylesheet" />    
+    <script type="text/javascript" src="/static/js/ajaxPoll.js"></script>
+
+    <script type="text/javascript" src="/static/js/polling.js"></script>
 </head>
 <body>
     <div id="Container">
         <div id="Header">
-            <a href="[% uri_for('/') %]">Amon2 Startup Page</a>
+            <a href="[% uri_for('/') %]">Rworker</a>
         </div>
         <div id="Content">

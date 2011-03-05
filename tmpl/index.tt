@@ -1,5 +1,9 @@
 [% INCLUDE 'include/header.tt' %]
 
-hello, Amon2 world!
+<div id="data-upload">
+    <span id="data-upload-file"><input type="file" name="file" value="" /></span>
+    <span id="data-upload-button"><input type="button" value="upload" /></span>
+    <span id="data-upload-message"></span>
+</div>
 
 [% INCLUDE 'include/footer.tt' %]

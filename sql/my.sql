@@ -17,3 +17,10 @@ CREATE TABLE `job_return` (
   `log` text,
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `job_upload` (
+  `job_id` bigint(20) unsigned NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  UNIQUE KEY `job_id` (`job_id`,`type`,`path`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -33,9 +33,10 @@ rworker_download <- function(url) {
 }
 
 rworker_wait_message <- function() {
-    # 他のプロセスからの書き込みが混ざるとうまくいかない可能性あり
-    message <- readLines(fifo(args$fifo, open = 'read', blocking = TRUE), n=1)
+    fifo <- fifo(args$fifo, open = 'read', blocking = TRUE)
+    message <- readLines(fifo, n=1)
     rworker_log(paste("1 message received [", message, "]"))
+    close(fifo)
 
     fromJSON(message)
 }

@@ -1,0 +1,23 @@
+[% INCLUDE 'include/header.tt' %]
+
+<div>
+<form method="post" action="/job/add">
+
+<table>
+<tr><td>r_file</td><td><input type="text" name="r_file" value="https://gist.github.com/raw/856397/sample_ggplot.r" size="100" /></td></tr>
+<tr><td>r_return</td><td><input type="text" name="r_return" value="http://localhost:5000/api/job/{job_id}/log?log=" size="100" /></td></tr>
+</table>
+
+<table>
+<tr><td>arg</td><td>value</td></tr>
+<tr><td><input type="text" name="arg1" value="data" size="20" /></td><td><input type="text" name="value1" value="http://s3.amazonaws.com/rworker-demo/test/diamonds_head.csv" size="100" /></td></tr>
+<tr><td><input type="text" name="arg3" value="upload_url" size="20" /></td><td><input type="text" name="value3" value="http://localhost:5000/api/job/{job_id}/upload" size="100" /></td></tr>
+<tr><td><input type="text" name="arg4" value="upload_key" size="20" /></td><td><input type="text" name="value4" value="img" size="100" /></td></tr>
+</table>
+
+<input type="submit" value="add job">
+
+</form>
+</div>
+
+[% INCLUDE 'include/footer.tt' %]

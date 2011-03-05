@@ -27,13 +27,13 @@ my $arg2 = encode_json({
     upload_key => "img",
 });
 
-print "$arg1\n";
+#print "$arg1\n";
 print "$arg2\n";
 
 my $client = Gearman::Client->new;
 $client->job_servers('127.0.0.1');
 
-$client->do_task('Rworker', $arg1);
+#$client->do_task('Rworker', $arg1);
 $client->do_task('Rworker', $arg2);
 
 #$client->dispatch_background('Rworker', $arg1);

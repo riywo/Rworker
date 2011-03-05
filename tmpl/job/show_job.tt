@@ -1,0 +1,22 @@
+[% INCLUDE 'include/header.tt' %]
+
+<div>
+<p>job id : <span id="job_id">[% job_id %]</span></p>
+<p>r_file : [% r_file %]</p>
+
+[% FOREACH arg IN args %]
+<p>[% arg.arg %] : [% arg.value %]</p>
+[% END %]
+
+<p>log</p>
+<div id="job_log">
+<pre>
+</pre>
+</div>
+
+<p>uploads</p>
+<div id="uploads"></div>
+
+</div>
+
+[% INCLUDE 'include/footer.tt' %]

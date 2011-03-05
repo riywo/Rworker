@@ -29,4 +29,14 @@ table {
     /;
 };
 
+table {
+    name 'job_upload';
+    pk ;
+    columns qw/
+        job_id
+        path
+        type
+    /;
+};
+
 1;

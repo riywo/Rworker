@@ -9,6 +9,9 @@
         dsn => 'dbi:mysql:dbname=rworker',
         username => 'root',
         password => '',
+        connect_options => {
+            mysql_enable_utf8 => 1,
+        },
     },
 
     'Text::Xslate' => {

@@ -10,3 +10,5 @@ sandbox/
 R/data/
 R/img/
 R/r_return/
+temp/
+htdocs/static/upload/
